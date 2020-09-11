@@ -1,5 +1,10 @@
 package com.smallert.gamebody.map;
 
+import com.smallert.commond.Direction;
+import com.smallert.commond.Group;
+import com.smallert.commond.MapEnum;
+import com.smallert.gamebody.GameModule;
+import com.smallert.gamebody.tank.PlayerTank;
 import com.smallert.gui.GameFrame;
 import com.smallert.utils.ImgLoadUtil;
 import com.smallert.utils.PropertyUtil;
@@ -7,8 +12,9 @@ import com.smallert.utils.PropertyUtil;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.*;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 开始菜单
@@ -83,7 +89,15 @@ public class MenuMap extends GameMap {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    System.out.println("点击");
+                    GameModule.currentMap = MapEnum.STAGE_1;
+                    Set<Label> labels = labelMap.keySet();
+                    for (Label label : labels) {
+                        GameFrame.getInstance().remove(label);
+                    }
+                    new PlayerTank(Integer.parseInt((String) PropertyUtil.get("playBirth1X")),
+                            Integer.parseInt((String) PropertyUtil.get("playBirthY")),
+                            ImgLoadUtil.Player1TankD.getWidth(),ImgLoadUtil.Player1TankD.getHeight(),8, Group.BLUE, true,Direction.UP);
+
                 }
 
                 @Override
