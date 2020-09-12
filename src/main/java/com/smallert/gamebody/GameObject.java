@@ -1,7 +1,9 @@
 package com.smallert.gamebody;
 
-import java.awt.*;
+import lombok.Data;
 
+import java.awt.*;
+@Data
 public abstract class GameObject {
     /**
      * 物体的位置
@@ -23,5 +25,7 @@ public abstract class GameObject {
         this.rectangle = new Rectangle(positionX,positionY,width,height);
     }
 
-    public abstract void pain(Graphics g);
+    public abstract void paint(Graphics g);
+
+    public abstract void destroy();
 }

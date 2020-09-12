@@ -1,8 +1,8 @@
 package com.smallert.gamebody.tank;
 
-import com.smallert.commond.Direction;
-import com.smallert.commond.Group;
-import com.smallert.gamebody.GameModule;
+import com.smallert.common.Direction;
+import com.smallert.common.Group;
+import com.smallert.gamebody.explosion.Explosion;
 import com.smallert.utils.ImgLoadUtil;
 
 import java.awt.*;
@@ -12,13 +12,13 @@ import java.awt.*;
  */
 public class PlayerTank extends TankObject{
 
-    public PlayerTank(int positionX, int positionY, int width, int height, int speed, Group group, boolean isLiving, Direction dir) {
-        super(positionX, positionY, width, height, speed, group, isLiving, dir);
-        GameModule.getInstance().getPlayerTanks().add(this);
+    public PlayerTank(int positionX, int positionY, int width, int height, int speed, Group group, boolean isLiving, Direction dir,boolean isGift) {
+        super(positionX, positionY, width, height, speed, group, isLiving, dir,isGift);
+        gm.getPlayerTanks().add(this);
     }
 
     @Override
-    public void pain(Graphics g) {
+    public void paint(Graphics g) {
         if (!isLiving) return;
         move();
         switch (dir){
@@ -35,5 +35,16 @@ public class PlayerTank extends TankObject{
                 g.drawImage(ImgLoadUtil.Player1TankD,positionX,positionY,null);
                 break;
         }
+    }
+
+    @Override
+    public void destroy() {
+        if (Integer.parseInt(gm.getLifeNum())<0){
+            this.isLiving=false;
+            gm.getPlayerTanks().remove(this);
+        }
+        gm.getGameBodyList().remove(this);
+        //添加爆炸
+        gm.getGameBodyList().add(new Explosion(positionX,positionY,0,0,true));
     }
 }

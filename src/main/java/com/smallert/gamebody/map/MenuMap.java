@@ -1,8 +1,8 @@
 package com.smallert.gamebody.map;
 
-import com.smallert.commond.Direction;
-import com.smallert.commond.Group;
-import com.smallert.commond.MapEnum;
+import com.smallert.common.Direction;
+import com.smallert.common.Group;
+import com.smallert.common.MapEnum;
 import com.smallert.gamebody.GameModule;
 import com.smallert.gamebody.tank.PlayerTank;
 import com.smallert.gui.GameFrame;
@@ -94,10 +94,14 @@ public class MenuMap extends GameMap {
                     for (Label label : labels) {
                         GameFrame.getInstance().remove(label);
                     }
-                    new PlayerTank(Integer.parseInt((String) PropertyUtil.get("playBirth1X")),
+                    /**
+                     * 添加我方坦克
+                     */
+                   PlayerTank playerTank = new PlayerTank(Integer.parseInt((String) PropertyUtil.get("playBirth1X")),
                             Integer.parseInt((String) PropertyUtil.get("playBirthY")),
-                            ImgLoadUtil.Player1TankD.getWidth(),ImgLoadUtil.Player1TankD.getHeight(),8, Group.BLUE, true,Direction.UP);
-
+                            ImgLoadUtil.Player1TankD.getWidth(),ImgLoadUtil.Player1TankD.getHeight(),8, Group.BLUE, true,Direction.UP,false);
+                   //加入进行碰撞检验
+                   GameModule.getInstance().getGameBodyList().add(playerTank);
                 }
 
                 @Override

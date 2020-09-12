@@ -1,7 +1,6 @@
 package com.smallert;
 
-import static org.junit.Assert.assertTrue;
-
+import com.smallert.common.Direction;
 import com.smallert.utils.PropertyUtil;
 import org.junit.Test;
 
@@ -21,5 +20,9 @@ public class AppTest
         for (String s : split) {
             System.out.println(s);
         }
+    }
+
+    @Test
+    public void testEnum(){
     }
 }

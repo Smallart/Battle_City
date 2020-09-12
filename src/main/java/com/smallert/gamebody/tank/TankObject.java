@@ -1,8 +1,7 @@
 package com.smallert.gamebody.tank;
 
-import com.smallert.commond.Direction;
-import com.smallert.commond.Group;
-import com.smallert.gamebody.GameModule;
+import com.smallert.common.Direction;
+import com.smallert.common.Group;
 import com.smallert.gamebody.GameObject;
 import com.smallert.gamebody.bullet.Bullet;
 import com.smallert.gui.GameFrame;
@@ -16,12 +15,18 @@ public abstract class TankObject extends GameObject {
     protected boolean isMoving=false;
     protected Group group;
     public boolean dirDown,dirUp,dirLeft,dirRight;
+    protected int armorGrade=1;
+    /**
+     * 是否是奖励型坦克
+     */
+    protected boolean isGift;
 
-    public TankObject(int positionX, int positionY, int width, int height,int speed,Group group,boolean isLiving,Direction dir) {
+    public TankObject(int positionX, int positionY, int width, int height,int speed,Group group,boolean isLiving,Direction dir,boolean isGift) {
         super(positionX, positionY, width, height,isLiving);
         this.speed = speed;
         this.group = group;
         this.dir = dir;
+        this.isGift = isGift;
     }
 
     public void move(){
@@ -42,6 +47,7 @@ public abstract class TankObject extends GameObject {
                 positionX-=speed;
                 break;
         }
+        updateRectangle();
     }
 
     public void changeDir(){
@@ -99,7 +105,12 @@ public abstract class TankObject extends GameObject {
                 y = positionY+(width-ImgLoadUtil.BulletD.getWidth())/2;
                 break;
         }
-        new Bullet(x,y,ImgLoadUtil.BulletD.getWidth(),ImgLoadUtil.BulletU.getHeight(),true,dir,10);
+        new Bullet(x,y,ImgLoadUtil.BulletD.getWidth(),ImgLoadUtil.BulletU.getHeight(),true,dir,10,group);
+    }
+
+    private void updateRectangle(){
+        rectangle.x = positionX;
+        rectangle.y = positionY;
     }
 
 }

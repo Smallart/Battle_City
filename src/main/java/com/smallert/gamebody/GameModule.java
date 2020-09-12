@@ -1,7 +1,8 @@
 package com.smallert.gamebody;
 
-import com.smallert.commond.GameStatus;
-import com.smallert.commond.MapEnum;
+import com.smallert.common.GameStatus;
+import com.smallert.common.MapEnum;
+import com.smallert.gamebody.collisoncheck.CollisionManger;
 import com.smallert.gamebody.map.MenuMap;
 import com.smallert.gamebody.map.StageGameMap;
 import com.smallert.gamebody.map.Stage_1_Map;
@@ -47,6 +48,10 @@ public class GameModule {
      * 玩家坦克
      */
     private List<PlayerTank> playerTanks = new ArrayList<>();
+    /**
+     * 碰撞检测
+     */
+    private CollisionManger collisionManger = new CollisionManger();
 
     public void paint(Graphics g) {
         switch (currentMap){
@@ -66,11 +71,11 @@ public class GameModule {
         g.setColor(Color.red);
         g.drawString("物体数量："+gameBodyList.size(),20,50);
         g.setColor(color);
-        for (PlayerTank playerTank : playerTanks) {
-            playerTank.pain(g);
-        }
         for (int i = 0; i < gameBodyList.size(); i++) {
-            gameBodyList.get(i).pain(g);
+            gameBodyList.get(i).paint(g);
+            for (int j = i; j < gameBodyList.size(); j++) {
+                collisionManger.collide(gameBodyList.get(i),gameBodyList.get(j));
+            }
         }
     }
 
