@@ -3,7 +3,7 @@ package com.smallert.gamebody.tank;
 import com.smallert.common.Direction;
 import com.smallert.common.Group;
 import com.smallert.gamebody.GameObject;
-import com.smallert.gamebody.bullet.Bullet;
+import com.smallert.gamebody.otherobject.Bullet;
 import com.smallert.gui.GameFrame;
 import com.smallert.utils.ImgLoadUtil;
 import lombok.Data;
@@ -15,7 +15,12 @@ public abstract class TankObject extends GameObject {
     protected boolean isMoving=false;
     protected Group group;
     public boolean dirDown,dirUp,dirLeft,dirRight;
-    protected int armorGrade=1;
+    protected int armorGrade=0;
+    /**
+     * 坦克前一步的位置
+     */
+    protected int prePositionX;
+    protected int prePositionY;
     /**
      * 是否是奖励型坦克
      */
@@ -27,12 +32,16 @@ public abstract class TankObject extends GameObject {
         this.group = group;
         this.dir = dir;
         this.isGift = isGift;
+        prePositionX=positionX;
+        prePositionY=positionY;
     }
 
     public void move(){
         if (!isMoving) return;
         changeDir();
         if (ifCrossTheBorder()) return;
+        prePositionX=positionX;
+        prePositionY=positionY;
         switch (dir){
             case UP:
                 positionY-=speed;
@@ -113,4 +122,8 @@ public abstract class TankObject extends GameObject {
         rectangle.y = positionY;
     }
 
+    public void stop(){
+        this.positionX=this.prePositionX;
+        this.positionY=this.prePositionY;
+    }
 }

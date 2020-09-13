@@ -13,8 +13,8 @@ public class CollisionManger implements BasicCollisionInter{
     private List<BasicCollisionInter> collisionInters = new LinkedList<>();
 
     public CollisionManger(){
-        add(new BulletCollideTank());
         add(new TankCollideOther());
+        add(new BulletCollideTank());
     }
 
     public void add(BasicCollisionInter basicCollision){

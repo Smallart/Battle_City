@@ -1,4 +1,4 @@
-package com.smallert.gamebody.bullet;
+package com.smallert.gamebody.otherobject;
 
 import com.smallert.common.Direction;
 import com.smallert.common.Group;

@@ -1,6 +1,8 @@
 package com.smallert.gamebody.map;
 
+import com.smallert.common.GameObjectType;
 import com.smallert.gamebody.GameModule;
+import com.smallert.gamebody.GameObject;
 import com.smallert.gui.GameFrame;
 import com.smallert.utils.ImgLoadUtil;
 import com.smallert.utils.PropertyUtil;
@@ -46,9 +48,9 @@ public abstract class StageGameMap extends GameMap{
         g.setFont(new Font(Font.SANS_SERIF,Font.BOLD,20));
         g.drawString(GameModule.getLifeNum(),GameFrame.GAME_WIDTH-Bg_Gray_height+ImgLoadUtil.PlayerTankCountIco.getWidth(),GameFrame.GAME_HEIGHT/2+50+ImgLoadUtil.PlayerOneIco.getHeight());
         //基地与围墙
-        g.drawImage(ImgLoadUtil.Home,(GameFrame.GAME_WIDTH-ImgLoadUtil.Home.getWidth())/2,GameFrame.GAME_HEIGHT-ImgLoadUtil.Home.getHeight()-Bg_Gray_height,null);
-        g.drawImage(ImgLoadUtil.BrickWallSmall,(GameFrame.GAME_WIDTH-ImgLoadUtil.Home.getWidth())/2-ImgLoadUtil.BrickWallSmall.getWidth(),GameFrame.GAME_HEIGHT-ImgLoadUtil.Home.getHeight()-Bg_Gray_height,null);
-        g.drawImage(ImgLoadUtil.BrickWallSmall,(GameFrame.GAME_WIDTH-ImgLoadUtil.Home.getWidth())/2-ImgLoadUtil.BrickWallSmall.getWidth(),GameFrame.GAME_HEIGHT-ImgLoadUtil.Home.getHeight()-Bg_Gray_height+ImgLoadUtil.BrickWallSmall.getHeight(),null);
+
+        g.drawImage(ImgLoadUtil.GameObjectTypes[GameObjectType.Home.ordinal()],(GameFrame.GAME_WIDTH-ImgLoadUtil.Home.getWidth())/2,GameFrame.GAME_HEIGHT-ImgLoadUtil.Home.getHeight()-Bg_Gray_height,null);
+
 
         int width = (GameFrame.GAME_WIDTH-ImgLoadUtil.Home.getWidth())/2-ImgLoadUtil.BrickWallSmall.getWidth();
         for (int i = 0; i <4 ; i++) {

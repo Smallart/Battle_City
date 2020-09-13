@@ -21,10 +21,9 @@ public class Gift extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!isLiving) return;
-        if (Math.random()>0.5){
-            for (int i = 0; i < 3 ; i++) {
-                g.drawImage(ImgLoadUtil.GameObjectTypes[gameObjectType.ordinal()],positionX,positionY,null);
-            }
+        if (Math.random()>0.3){
+            g.drawImage(ImgLoadUtil.GameObjectTypes[gameObjectType.ordinal()],positionX,positionY,null);
+
         }
         lifeCountDown();
     }

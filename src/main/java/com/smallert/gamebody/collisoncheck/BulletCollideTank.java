@@ -1,7 +1,7 @@
 package com.smallert.gamebody.collisoncheck;
 
 import com.smallert.gamebody.GameObject;
-import com.smallert.gamebody.bullet.Bullet;
+import com.smallert.gamebody.otherobject.Bullet;
 import com.smallert.gamebody.tank.TankObject;
 
 /**
@@ -14,19 +14,19 @@ public class BulletCollideTank implements BasicCollisionInter {
             Bullet bullet = (Bullet)gameOne;
             TankObject tankObject =(TankObject)gameTwo;
             if (bullet.getGroup()!=tankObject.getGroup()){
-                if (tankObject.getRectangle().contains(bullet.getRectangle())){
+                if (tankObject.getRectangle().intersects(bullet.getRectangle())){
                     bullet.destroy();
                     /**
                      * todo 对不同坦克不一样处理
                      */
+                    tankObject.setArmorGrade(tankObject.getArmorGrade()-1);
                     tankObject.destroy();
                 }
             }
-            return true;
+            return false;
         }else if ((gameTwo instanceof Bullet)&&(gameOne instanceof TankObject)){
             collide(gameTwo,gameOne);
-            return true;
         }
-        return false;
+        return true;
     }
 }

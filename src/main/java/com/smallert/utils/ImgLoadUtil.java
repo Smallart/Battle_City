@@ -22,7 +22,7 @@ public class ImgLoadUtil {
     public static BufferedImage[] EnemyTank_Gift_Armor_Green_Pic = new BufferedImage[4];
     public static BufferedImage[] EnemyTank_Gift_Armor_Red_Pic = new BufferedImage[4];
     public static BufferedImage[] Explosions = new BufferedImage[9];
-    public static BufferedImage[] GameObjectTypes = new BufferedImage[5];
+    public static BufferedImage[] GameObjectTypes = new BufferedImage[18];
 
     static {
         try {
@@ -32,9 +32,9 @@ public class ImgLoadUtil {
             PlayerTankCountIco = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/playerTankCountIco.png"));
             PlayerOneIco = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/playerOneIco.png"));
             PlayerTwoIco = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/playerTwoIco.png"));
-            Home = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/home.png")),0.8);
-            BrickWallSmall = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/brickwall.png")),0.4);
-            BrickWall = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/brickwall.png"));
+            Home = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/Home.png")),0.8);
+            BrickWallSmall = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/BrickWall.png")),0.4);
+            BrickWall = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/BrickWall.png"));
             Born1 = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/born1.png"));
             Player1TankU = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankU.png")),0.8);
             Player1TankL = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankL.png")),0.8);

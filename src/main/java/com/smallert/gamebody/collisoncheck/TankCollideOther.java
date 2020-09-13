@@ -1,20 +1,27 @@
 package com.smallert.gamebody.collisoncheck;
 
 import com.smallert.gamebody.GameObject;
+import com.smallert.gamebody.otherobject.Bullet;
 import com.smallert.gamebody.tank.TankObject;
 
 public class TankCollideOther implements BasicCollisionInter {
     @Override
     public boolean collide(GameObject gameOne, GameObject gameTwo) {
-        if (gameOne instanceof TankObject){
+        if ((gameOne instanceof TankObject)&&!(gameTwo instanceof Bullet)){
             TankObject tankObject = (TankObject) gameOne;
-            if (gameOne.getRectangle().contains(gameTwo.getRectangle())){
-                tankObject.setMoving(false);
-            }else if (!(gameOne instanceof TankObject)&&(gameTwo instanceof TankObject)){
-                collide(gameTwo,gameOne);
+            if (gameTwo instanceof TankObject){
+                TankObject tank = (TankObject)gameTwo;
+                if (tank.getRectangle().intersects(gameOne.getRectangle())){
+                    tank.stop();
+                }
             }
-            return true;
+            if (tankObject.getRectangle().intersects(gameTwo.getRectangle())){
+                tankObject.stop();
+            }
+            return false;
+        }else if (!(gameOne instanceof TankObject)&&(gameTwo instanceof TankObject)){
+            collide(gameTwo,gameOne);
         }
-        return false;
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-package com.smallert.gamebody.explosion;
+package com.smallert.gamebody.otherobject;
 
 import com.smallert.gamebody.GameObject;
 import com.smallert.utils.ImgLoadUtil;

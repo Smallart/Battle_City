@@ -2,7 +2,7 @@ package com.smallert.gamebody.tank;
 
 import com.smallert.common.Direction;
 import com.smallert.common.Group;
-import com.smallert.gamebody.explosion.Explosion;
+import com.smallert.gamebody.otherobject.Explosion;
 import com.smallert.utils.ImgLoadUtil;
 
 import java.awt.*;

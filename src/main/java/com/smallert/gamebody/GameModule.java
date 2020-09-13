@@ -73,7 +73,7 @@ public class GameModule {
         g.setColor(color);
         for (int i = 0; i < gameBodyList.size(); i++) {
             gameBodyList.get(i).paint(g);
-            for (int j = i; j < gameBodyList.size(); j++) {
+            for (int j = i+1; j < gameBodyList.size(); j++) {
                 collisionManger.collide(gameBodyList.get(i),gameBodyList.get(j));
             }
         }

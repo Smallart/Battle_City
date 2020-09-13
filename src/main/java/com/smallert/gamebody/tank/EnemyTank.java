@@ -3,9 +3,10 @@ package com.smallert.gamebody.tank;
 import com.smallert.common.Direction;
 import com.smallert.common.EnemyTankType;
 import com.smallert.common.Group;
-import com.smallert.gamebody.explosion.Explosion;
+import com.smallert.gamebody.otherobject.Explosion;
 import com.smallert.gamebody.gift.Gift;
 import com.smallert.gamebody.tank.paintpicstrategy.BasicPaintPicStrategy;
+import com.smallert.gamebody.tank.paintpicstrategy.impl.PaintEnemyArmorTank;
 import com.smallert.gamebody.tank.paintpicstrategy.impl.PaintEnemySpeedTank;
 import com.smallert.utils.ImgLoadUtil;
 
@@ -43,6 +44,7 @@ public class EnemyTank extends TankObject{
                 paintPicStrategy = new PaintEnemySpeedTank();
                 break;
             case DEFENSIVE:
+                paintPicStrategy = new PaintEnemyArmorTank();
                 break;
         }
         paintPicStrategy.paintTankPic(g,this);
@@ -50,16 +52,19 @@ public class EnemyTank extends TankObject{
 
     @Override
     public void destroy() {
-        this.isLiving=false;
-        gm.getGameBodyList().remove(this);
-        //添加爆炸
-        gm.getGameBodyList().add(new Explosion(positionX,positionY,0,0,true));
-        //如果是奖励坦克掉落奖励
+        if (armorGrade<0){
+            this.isLiving=false;
+            gm.getGameBodyList().remove(this);
+            //添加爆炸
+            gm.getGameBodyList().add(new Explosion(positionX,positionY,0,0,true));
+            //如果是奖励坦克掉落奖励
+        }
         if (isGift){
             /**
              * todo 之后修改为随机出现
              */
             new Gift(positionX,positionY, ImgLoadUtil.GameObjectTypes[0].getWidth(),ImgLoadUtil.GameObjectTypes[0].getHeight(),true,200);
+            this.isGift = false;
         }
     }
 
@@ -72,7 +77,7 @@ public class EnemyTank extends TankObject{
                 speed+=4;
                 break;
             case DEFENSIVE:
-                armorGrade+=3;
+                armorGrade+=2;
                 break;
         }
     }
