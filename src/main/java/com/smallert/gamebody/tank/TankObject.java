@@ -2,15 +2,18 @@ package com.smallert.gamebody.tank;
 
 import com.smallert.common.Direction;
 import com.smallert.common.Group;
+import com.smallert.gamebody.Audio;
 import com.smallert.gamebody.GameObject;
-import com.smallert.gamebody.otherobject.Bullet;
+import com.smallert.gamebody.GameObjectSimpleFactory;
 import com.smallert.gui.GameFrame;
+import com.smallert.utils.AudioUtil;
 import com.smallert.utils.ImgLoadUtil;
 import lombok.Data;
 
 @Data
 public abstract class TankObject extends GameObject {
     protected int speed;
+    protected int preSpeed;
     protected Direction dir;
     protected boolean isMoving=false;
     protected Group group;
@@ -26,9 +29,10 @@ public abstract class TankObject extends GameObject {
      */
     protected boolean isGift;
 
-    public TankObject(int positionX, int positionY, int width, int height,int speed,Group group,boolean isLiving,Direction dir,boolean isGift) {
-        super(positionX, positionY, width, height,isLiving);
+    public TankObject(int positionX, int positionY,int speed,Group group,boolean isLiving,Direction dir,boolean isGift) {
+        super(positionX, positionY,isLiving);
         this.speed = speed;
+        this.preSpeed =speed;
         this.group = group;
         this.dir = dir;
         this.isGift = isGift;
@@ -114,7 +118,8 @@ public abstract class TankObject extends GameObject {
                 y = positionY+(width-ImgLoadUtil.BulletD.getWidth())/2;
                 break;
         }
-        new Bullet(x,y,ImgLoadUtil.BulletD.getWidth(),ImgLoadUtil.BulletU.getHeight(),true,dir,10,group);
+        GameObjectSimpleFactory.createBullet(x,y,true,dir,10,group,0);
+        AudioUtil.hireAudio();
     }
 
     private void updateRectangle(){

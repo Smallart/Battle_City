@@ -11,8 +11,11 @@ import java.awt.*;
  */
 public class Rive extends GameObject {
 
-    public Rive(int positionX, int positionY, int width, int height, boolean isLiving) {
-        super(positionX, positionY, width, height, isLiving);
+    public Rive(int positionX, int positionY, boolean isLiving) {
+        super(positionX, positionY, isLiving);
+        this.width = ImgLoadUtil.GameObjectTypes[GameObjectType.Rive1.ordinal()].getWidth();
+        this.height = ImgLoadUtil.GameObjectTypes[GameObjectType.Rive1.ordinal()].getHeight();
+        this.rectangle = new Rectangle(positionX,positionY,width,height);
         gm.getGameBodyList().add(this);
     }
 
@@ -34,5 +37,13 @@ public class Rive extends GameObject {
     @Override
     public void destroy() {
 
+    }
+
+    public static int getPicWidth(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Rive1.ordinal()].getWidth();
+    }
+
+    public static int getPicHeight(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Rive1.ordinal()].getHeight();
     }
 }

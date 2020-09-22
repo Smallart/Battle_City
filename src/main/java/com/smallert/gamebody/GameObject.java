@@ -16,16 +16,14 @@ public abstract class GameObject {
     protected boolean isLiving;
     protected GameModule gm = GameModule.getInstance();
 
-    public GameObject(int positionX, int positionY, int width, int height, boolean isLiving) {
+    public GameObject(int positionX, int positionY, boolean isLiving) {
         this.positionX = positionX;
         this.positionY = positionY;
-        this.width = width;
-        this.height = height;
         this.isLiving = isLiving;
-        this.rectangle = new Rectangle(positionX,positionY,width,height);
     }
 
     public abstract void paint(Graphics g);
 
     public abstract void destroy();
+
 }

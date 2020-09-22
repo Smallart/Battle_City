@@ -1,11 +1,11 @@
 package com.smallert.gamebody.map;
 
-import com.smallert.common.Direction;
-import com.smallert.common.Group;
 import com.smallert.common.MapEnum;
+import com.smallert.common.FrameEnum;
 import com.smallert.gamebody.GameModule;
-import com.smallert.gamebody.tank.PlayerTank;
+import com.smallert.gui.EditMapFrame;
 import com.smallert.gui.GameFrame;
+import com.smallert.utils.AudioUtil;
 import com.smallert.utils.ImgLoadUtil;
 import com.smallert.utils.PropertyUtil;
 
@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,14 +21,6 @@ import java.util.Set;
  * 开始菜单
  */
 public class MenuMap extends GameMap {
-
-    private static MenuMap INSTANCE = new MenuMap();
-
-    private MenuMap(){}
-
-    public static MenuMap getInstance(){
-        return INSTANCE;
-    }
 
     public static String menuString;
     public static int menuStringSize;
@@ -42,6 +35,8 @@ public class MenuMap extends GameMap {
     public static int Battle_City_Height = 120;
     public static int Menu_String_Margin = 40;
 
+    private Font font = new Font(Font.SANS_SERIF, Font.BOLD, menuStringSize);
+
     public void paint(Graphics g) {
         g.drawImage(ImgLoadUtil.Battle_City, (GameFrame.GAME_WIDTH-ImgLoadUtil.Battle_City.getWidth())/2,Battle_City_Height,null);
         paintElection(g);
@@ -51,7 +46,7 @@ public class MenuMap extends GameMap {
         if (menuString==null) return;
 
         Color color = g.getColor();
-        Font font = new Font(Font.SANS_SERIF, Font.BOLD, menuStringSize);
+
         g.setColor(Color.white);
         g.setFont(font);
         g.drawString(CopyRight_TWO,(GameFrame.GAME_WIDTH-stringWidth(g,CopyRight_TWO))/2,GameFrame.GAME_HEIGHT-Menu_String_Margin);
@@ -66,7 +61,6 @@ public class MenuMap extends GameMap {
             }
         }
         g.setColor(color);
-
     }
 
     private int stringWidth(Graphics g,String text){
@@ -76,47 +70,78 @@ public class MenuMap extends GameMap {
     private void createLabels(Graphics g, Font f){
         String[] selectMenu = menuString.split("_");
         int height=ImgLoadUtil.Battle_City.getHeight()+Battle_City_Height+(ImgLoadUtil.Battle_City.getHeight()+Battle_City_Height-Menu_String_Margin-menuStringSize)/selectMenu.length;
-        int width = stringWidth(g,selectMenu[0]);
-        for (String createLabels : selectMenu) {
-            final Label label = new Label(createLabels);
-            label.setBounds((GameFrame.GAME_WIDTH-width)/2,height,stringWidth(g,createLabels),menuStringSize);
-            label.setFont(f);
-            label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            label.setForeground(Color.white);
-            label.setBackground(Color.black);
-            GameFrame.getInstance().add(label);
-            labelMap.put(label,false);
-            label.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    GameModule.currentMap = MapEnum.STAGE_1;
-                    Set<Label> labels = labelMap.keySet();
-                    for (Label label : labels) {
-                        GameFrame.getInstance().remove(label);
+
+        for (int i = 0; i < selectMenu.length; i++) {
+            Label label = builderLabelsDetail(selectMenu[i],g,height,f);
+            if (selectMenu[i].contains("PLAYER")){
+                label.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //转换状态
+                        GameFrame.type= FrameEnum.GameFrame;
+                        GameModule.currentMap = MapEnum.STAGE_1;
+                        AudioUtil.stageStartAudio();
+                        Set<Label> labels = labelMap.keySet();
+                        for (Label label : labels) {
+                            GameFrame.getInstance().remove(label);
+                        }
                     }
-                    /**
-                     * 添加我方坦克
-                     */
-                   PlayerTank playerTank = new PlayerTank(Integer.parseInt((String) PropertyUtil.get("playBirth1X")),
-                            Integer.parseInt((String) PropertyUtil.get("playBirthY")),
-                            ImgLoadUtil.Player1TankD.getWidth(),ImgLoadUtil.Player1TankD.getHeight(),8, Group.BLUE, true,Direction.UP,false);
-                   //加入进行碰撞检验
-                   GameModule.getInstance().getGameBodyList().add(playerTank);
-                }
 
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    Label label =(Label) e.getSource();
-                    labelMap.put(label,true);
-                }
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        Label label =(Label) e.getSource();
+                        labelMap.put(label,true);
+                    }
 
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    Label label =(Label) e.getSource();
-                    labelMap.put(label,false);
-                }
-            });
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        Label label =(Label) e.getSource();
+                        labelMap.put(label,false);
+                    }
+                });
+
+            }else{
+                label.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        GameFrame.type= FrameEnum.EditMap;
+                        GameFrame.selected = true;
+                        Set<Label> labels = labelMap.keySet();
+                        Iterator<Label> iterator = labels.iterator();
+                        while (iterator.hasNext()){
+                            Label next = iterator.next();
+                            GameFrame.getInstance().remove(next);
+                            iterator.remove();
+                        }
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        Label label =(Label) e.getSource();
+                        labelMap.put(label,true);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        Label label =(Label) e.getSource();
+                        labelMap.put(label,false);
+                    }
+                });
+            }
+            labelMap.put(label,false);
             height +=menuStringSize*1.5;
         }
+    }
+
+    private Label builderLabelsDetail(String words,Graphics g,int height,Font f){
+        int width = stringWidth(g,words);
+        Label label = new Label(words);
+        label.setBounds((GameFrame.GAME_WIDTH-width)/2,height,stringWidth(g,words),menuStringSize);
+        label.setFont(f);
+        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        label.setForeground(Color.white);
+        label.setBackground(Color.black);
+        GameFrame.getInstance().add(label);
+        return label;
     }
 }

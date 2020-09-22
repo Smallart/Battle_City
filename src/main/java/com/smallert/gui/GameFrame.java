@@ -1,6 +1,9 @@
 package com.smallert.gui;
 
+import com.smallert.common.FrameEnum;
+import com.smallert.common.GameStatus;
 import com.smallert.gamebody.GameModule;
+import com.smallert.gamebody.map.MenuMap;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,8 +19,12 @@ public class GameFrame extends Frame {
     public static final int ACTUAL_GAME_BOUNDARY_L=80,ACTUAL_GAME_BOUNDARY_R=720,
             ACTUAL_GAME_BOUNDARY_U=60,ACTUAL_GAME_BOUNDARY_D=540;
     private Image offScreenImage=null;
-    public static final GameFrame INSTANCE=new GameFrame();
+    public static boolean selected;
+    public static FrameEnum type = FrameEnum.MENU;
     private static GameModule gameModule = GameModule.getInstance();
+    public static final GameFrame INSTANCE=new GameFrame();
+    private EditMapFrame editMapFrame;
+    private MenuMap menuMap;
     private GameFrame(){
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
@@ -47,7 +54,30 @@ public class GameFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        gameModule.paint(g);
+        switch (type){
+            case EditMap:
+                if (editMapFrame==null||selected){
+                    editMapFrame = new EditMapFrame();
+                    if (selected){
+                        selected =false;
+                    }
+                }
+                editMapFrame.paint(g);
+                break;
+            case GameFrame:
+                gameModule.setGameStatus(GameStatus.START);
+                gameModule.paint(g);
+                break;
+            case MENU:
+            default:
+                if (menuMap==null||selected){
+                    menuMap = new MenuMap();
+                    if (selected){
+                        selected =false;
+                    }
+                }
+                menuMap.paint(g);
+        }
     }
 
     /**
@@ -78,6 +108,7 @@ public class GameFrame extends Frame {
          */
         @Override
         public void keyPressed(KeyEvent e) {
+            if (gameModule.getGameStatus() != GameStatus.START) return;
             switch (e.getKeyCode()){
                 case KeyEvent.VK_W:
                     gameModule.getPlayerTanks().get(0).dirUp=true;
@@ -104,6 +135,7 @@ public class GameFrame extends Frame {
          */
         @Override
         public void keyReleased(KeyEvent e) {
+            if (gameModule.getGameStatus() != GameStatus.START) return;
             switch (e.getKeyCode()){
                 case KeyEvent.VK_W:
                     gameModule.getPlayerTanks().get(0).dirUp=false;

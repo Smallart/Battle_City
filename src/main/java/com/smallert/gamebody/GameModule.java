@@ -3,9 +3,8 @@ package com.smallert.gamebody;
 import com.smallert.common.GameStatus;
 import com.smallert.common.MapEnum;
 import com.smallert.gamebody.collisoncheck.CollisionManger;
-import com.smallert.gamebody.map.MenuMap;
+import com.smallert.gamebody.map.GameOverMap;
 import com.smallert.gamebody.map.StageGameMap;
-import com.smallert.gamebody.map.Stage_1_Map;
 import com.smallert.gamebody.tank.PlayerTank;
 import com.smallert.utils.PropertyUtil;
 import lombok.Data;
@@ -55,16 +54,14 @@ public class GameModule {
 
     public void paint(Graphics g) {
         switch (currentMap){
-            case MENU:
-                MenuMap.getInstance().paint(g);
-                break;
             case STAGE_1:
                 if (gameMap==null&&currentMap==MapEnum.STAGE_1){
-                    gameMap = new Stage_1_Map();
+                    gameMap = new StageGameMap();
                 }
                 gameMap.paint(g);
                 break;
             case GAME_OVER:
+                GameOverMap.getInstance().paint(g);
                 break;
         }
         Color color = g.getColor();

@@ -12,12 +12,17 @@ import java.awt.*;
  */
 public class Forest extends GameObject {
 
-    public Forest(int positionX, int positionY, int width, int height, boolean isLiving) {
-        super(positionX, positionY, width, height, isLiving);
+    public Forest(int positionX, int positionY, boolean isLiving) {
+        super(positionX, positionY, isLiving);
+        this.width = ImgLoadUtil.GameObjectTypes[GameObjectType.Forest.ordinal()].getWidth();
+        this.height = ImgLoadUtil.GameObjectTypes[GameObjectType.Forest.ordinal()].getHeight();
+        this.rectangle = new Rectangle(positionX,positionY,width,height);
+        gm.getGameBodyList().add(this);
     }
 
     @Override
     public void paint(Graphics g) {
+        if (!isLiving) return;
         g.drawImage(ImgLoadUtil.GameObjectTypes[GameObjectType.Forest.ordinal()],positionX,positionY,null);
     }
 
@@ -27,5 +32,13 @@ public class Forest extends GameObject {
     @Override
     public void destroy() {
 
+    }
+
+    public static int getPicWidth(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Forest.ordinal()].getWidth();
+    }
+
+    public static int getPicHeight(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Forest.ordinal()].getHeight();
     }
 }

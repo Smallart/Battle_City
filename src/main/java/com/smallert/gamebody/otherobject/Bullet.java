@@ -1,10 +1,13 @@
 package com.smallert.gamebody.otherobject;
 
 import com.smallert.common.Direction;
+import com.smallert.common.GameObjectType;
 import com.smallert.common.Group;
 import com.smallert.gamebody.GameModule;
 import com.smallert.gamebody.GameObject;
+import com.smallert.gamebody.GameObjectSimpleFactory;
 import com.smallert.gui.GameFrame;
+import com.smallert.utils.AudioUtil;
 import com.smallert.utils.ImgLoadUtil;
 import lombok.Data;
 
@@ -19,12 +22,17 @@ public class Bullet extends GameObject {
     private Direction dir;
     private int speed;
     private Group group;
+    private int pierceGrade;
 
-    public Bullet(int positionX, int positionY, int width, int height, boolean isLiving,Direction dir,int speed,Group group) {
-        super(positionX, positionY, width, height, isLiving);
+    public Bullet(int positionX, int positionY, boolean isLiving,Direction dir,int speed,Group group,int pierceGrade) {
+        super(positionX, positionY, isLiving);
         this.dir = dir;
         this.speed = speed;
         this.group = group;
+        this.width = ImgLoadUtil.BulletD.getWidth();
+        this.height = ImgLoadUtil.BulletD.getHeight();
+        this.rectangle = new Rectangle(positionX,positionY,width,height);
+        this.pierceGrade = pierceGrade;
         gm.getGameBodyList().add(this);
     }
 
@@ -53,6 +61,7 @@ public class Bullet extends GameObject {
 
     @Override
     public void destroy() {
+        AudioUtil.bulletHitAudio();
         this.isLiving=false;
         gm.getGameBodyList().remove(this);
     }
@@ -74,6 +83,8 @@ public class Bullet extends GameObject {
         }
         updateRectangle();
         if (checkIfCrossTheBorder()){
+            AudioUtil.bulletHitAudio();
+            gm.getGameBodyList().add(GameObjectSimpleFactory.createExplosion(positionX,positionY,true, GameObjectType.Bullet));
             this.isLiving = false;
         }
     }
@@ -111,5 +122,13 @@ public class Bullet extends GameObject {
     private void updateRectangle(){
         rectangle.x = positionX;
         rectangle.y = positionY;
+    }
+
+    public static int getPicWidth(){
+        return ImgLoadUtil.BulletD.getWidth();
+    }
+
+    public static int getPicHeight(){
+        return ImgLoadUtil.BulletD.getHeight();
     }
 }

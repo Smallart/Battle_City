@@ -11,10 +11,13 @@ public class Gift extends GameObject {
     private int liftTime;
     private GameObjectType gameObjectType;
 
-    public Gift(int positionX, int positionY, int width, int height, boolean isLiving,int liftTime) {
-        super(positionX, positionY, width, height, isLiving);
+    public Gift(int positionX, int positionY, boolean isLiving,int liftTime) {
+        super(positionX, positionY, isLiving);
         this.liftTime = liftTime;
         this.gameObjectType = GameObjectType.values()[(int)Math.random()*5];
+        this.width = ImgLoadUtil.GameObjectTypes[GameObjectType.Boom.ordinal()].getWidth();
+        this.height = ImgLoadUtil.GameObjectTypes[GameObjectType.Boom.ordinal()].getHeight();
+        this.rectangle = new Rectangle(positionX,positionY,width,height);
         gm.getGameBodyList().add(this);
     }
 
@@ -40,5 +43,13 @@ public class Gift extends GameObject {
         }else {
             liftTime-=1;
         }
+    }
+
+    public static int getPicWidth(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Boom.ordinal()].getWidth();
+    }
+
+    public static int getPicHeight(){
+        return ImgLoadUtil.GameObjectTypes[GameObjectType.Boom.ordinal()].getWidth();
     }
 }

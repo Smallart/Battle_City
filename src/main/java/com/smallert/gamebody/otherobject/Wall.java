@@ -16,10 +16,12 @@ public class Wall extends GameObject {
     private GameObjectType wallType;
     private int armorGrade;
 
-    public Wall(int positionX, int positionY, int width, int height, boolean isLiving,GameObjectType wallType,int armorGrade) {
-        super(positionX, positionY, width, height, isLiving);
+    public Wall(int positionX, int positionY, boolean isLiving,GameObjectType wallType,int armorGrade) {
+        super(positionX, positionY, isLiving);
         this.wallType = wallType;
         this.armorGrade = armorGrade;
+        initWidthAndHeight();
+        this.rectangle = new Rectangle(positionX,positionY,width,height);
         gm.getGameBodyList().add(this);
     }
 
@@ -52,5 +54,83 @@ public class Wall extends GameObject {
     public void destroy() {
         isLiving =false;
         gm.getGameBodyList().remove(this);
+    }
+
+    private void initWidthAndHeight(){
+        switch (wallType){
+            case BrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.BrickWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.BrickWall.ordinal()].getHeight();
+                break;
+            case VerticalBrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalBrickWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalBrickWall.ordinal()].getHeight();
+                break;
+            case SpotBrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.SpotBrickWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.SpotBrickWall.ordinal()].getHeight();
+                break;
+            case IronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.IronWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.IronWall.ordinal()].getHeight();
+                break;
+            case VerticalIronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalIronWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalIronWall.ordinal()].getHeight();
+                break;
+            case TransverseIronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.TransverseIronWall.ordinal()].getWidth();
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.TransverseIronWall.ordinal()].getHeight();
+                break;
+        }
+    }
+    public static int getPicWidth(GameObjectType wallType){
+        int width = 0;
+        switch (wallType){
+            case BrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.BrickWall.ordinal()].getWidth();
+                break;
+            case VerticalBrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalBrickWall.ordinal()].getWidth();
+                break;
+            case SpotBrickWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.SpotBrickWall.ordinal()].getWidth();
+                break;
+            case IronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.IronWall.ordinal()].getWidth();
+                break;
+            case VerticalIronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalIronWall.ordinal()].getWidth();
+                break;
+            case TransverseIronWall:
+                width = ImgLoadUtil.GameObjectTypes[GameObjectType.TransverseIronWall.ordinal()].getWidth();
+                break;
+        }
+        return width;
+    }
+
+    public static int getPicHeight(GameObjectType wallType){
+        int height = 0;
+        switch (wallType){
+            case BrickWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.BrickWall.ordinal()].getHeight();
+                break;
+            case VerticalBrickWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalBrickWall.ordinal()].getHeight();
+                break;
+            case SpotBrickWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.SpotBrickWall.ordinal()].getHeight();
+                break;
+            case IronWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.IronWall.ordinal()].getHeight();
+                break;
+            case VerticalIronWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.VerticalIronWall.ordinal()].getHeight();
+                break;
+            case TransverseIronWall:
+                height = ImgLoadUtil.GameObjectTypes[GameObjectType.TransverseIronWall.ordinal()].getHeight();
+                break;
+        }
+        return height;
     }
 }

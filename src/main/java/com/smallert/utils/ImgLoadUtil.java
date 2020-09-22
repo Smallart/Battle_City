@@ -22,7 +22,7 @@ public class ImgLoadUtil {
     public static BufferedImage[] EnemyTank_Gift_Armor_Green_Pic = new BufferedImage[4];
     public static BufferedImage[] EnemyTank_Gift_Armor_Red_Pic = new BufferedImage[4];
     public static BufferedImage[] Explosions = new BufferedImage[9];
-    public static BufferedImage[] GameObjectTypes = new BufferedImage[18];
+    public static BufferedImage[] GameObjectTypes = new BufferedImage[GameObjectType.values().length];
 
     static {
         try {
@@ -36,10 +36,16 @@ public class ImgLoadUtil {
             BrickWallSmall = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/BrickWall.png")),0.4);
             BrickWall = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/BrickWall.png"));
             Born1 = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/born1.png"));
-            Player1TankU = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankU.png")),0.8);
-            Player1TankL = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankL.png")),0.8);
-            Player1TankD = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankD.png")),0.8);
-            Player1TankR = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankR.png")),0.8);
+//            Player1TankU = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankU.png")),0.8);
+//            Player1TankL = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankL.png")),0.8);
+//            Player1TankD = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankD.png")),0.8);
+//            Player1TankR = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankR.png")),0.8);
+
+            Player1TankU = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankU.png"));
+            Player1TankL = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankL.png"));
+            Player1TankD = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankD.png"));
+            Player1TankR = ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/player1_tankR.png"));
+
             BulletU = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/bulletU.png")),0.6);
             BulletR = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/bulletR.png")),0.6);
             BulletD = ImageUtil.zoomImage(ImageIO.read(ImgLoadUtil.class.getClassLoader().getResourceAsStream("imgs/bulletD.png")),0.6);

@@ -2,12 +2,13 @@ package com.smallert.gamebody.collisoncheck;
 
 import com.smallert.gamebody.GameObject;
 import com.smallert.gamebody.otherobject.Bullet;
+import com.smallert.gamebody.otherobject.IceField;
 import com.smallert.gamebody.tank.TankObject;
 
 public class TankCollideOther implements BasicCollisionInter {
     @Override
     public boolean collide(GameObject gameOne, GameObject gameTwo) {
-        if ((gameOne instanceof TankObject)&&!(gameTwo instanceof Bullet)){
+        if (gameOne instanceof TankObject&&!(gameTwo instanceof Bullet||gameTwo instanceof IceField)){
             TankObject tankObject = (TankObject) gameOne;
             if (gameTwo instanceof TankObject){
                 TankObject tank = (TankObject)gameTwo;
